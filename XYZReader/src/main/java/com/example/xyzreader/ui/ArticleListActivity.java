@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -131,8 +132,8 @@ public class ArticleListActivity extends ActionBarActivity implements
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setEnterExitTransition(Intent intent){
-        getWindow().setExitTransition(new Explode().setDuration(800));
-        getWindow().setReenterTransition(new Explode().setDuration(800));
+        getWindow().setExitTransition(new Slide().setDuration(800));
+        getWindow().setReenterTransition(new Slide().setDuration(800));
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(ArticleListActivity.this).toBundle());
     }
 
@@ -153,7 +154,7 @@ public class ArticleListActivity extends ActionBarActivity implements
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,columnCount);
         mRecyclerView.setLayoutAnimation( AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down));
-
+        mRecyclerView.scheduleLayoutAnimation();
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 

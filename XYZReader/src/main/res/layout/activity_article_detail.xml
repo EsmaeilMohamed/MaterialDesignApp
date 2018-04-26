@@ -10,7 +10,8 @@
         style="@style/AppTheme.PopupOverlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackgroundBorderless"
+        android:background="@color/theme_primary"
+        app:titleTextColor="@android:color/white"
         android:contentDescription="@string/up"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
