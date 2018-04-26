@@ -153,7 +153,7 @@ public class ArticleListActivity extends ActionBarActivity implements
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,columnCount);
         mRecyclerView.setLayoutAnimation( AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down));
-        mRecyclerView.scheduleLayoutAnimation();
+
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
