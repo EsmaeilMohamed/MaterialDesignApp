@@ -46,12 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * An activity representing a list of Articles. This activity has different presentations for
- * handset and tablet-size devices. On handsets, the activity presents a list of items, which when
- * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
- * activity presents a grid of items as cards.
- */
+
 public class ArticleListActivity extends ActionBarActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -80,14 +75,13 @@ public class ArticleListActivity extends ActionBarActivity implements
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-        //final View toolbarContainerView = findViewById(R.id.toolbar_container);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
 
-       /* if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             refresh();
             Snackbar.make(coordinatorLayout,"Refreshing ...",Snackbar.LENGTH_LONG)
                     .setAction("Stop", new View.OnClickListener() {
@@ -97,7 +91,7 @@ public class ArticleListActivity extends ActionBarActivity implements
                         }
                     }).show();
 
-        }*/
+        }
     }
 
     private void refresh() {
@@ -132,8 +126,8 @@ public class ArticleListActivity extends ActionBarActivity implements
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setEnterExitTransition(Intent intent){
-        getWindow().setExitTransition(new Slide().setDuration(800));
-        getWindow().setReenterTransition(new Slide().setDuration(800));
+        getWindow().setExitTransition(new Explode().setDuration(500));
+        getWindow().setReenterTransition(new Explode().setDuration(500));
         startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(ArticleListActivity.this).toBundle());
     }
 
@@ -185,10 +179,8 @@ public class ArticleListActivity extends ActionBarActivity implements
                 @Override
                 public void onClick(View view) {
 
-                    setEnterExitTransition(new Intent(Intent.ACTION_VIEW,
+                    startActivity(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
-                   /* startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));*/
                 }
             });
             return vh;
