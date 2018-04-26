@@ -1,5 +1,6 @@
 package com.example.xyzreader.ui;
 
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,7 +9,11 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,11 +22,15 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
+import android.transition.Explode;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -49,6 +58,7 @@ public class ArticleListActivity extends ActionBarActivity implements
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+    private CoordinatorLayout coordinatorLayout;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -59,8 +69,13 @@ public class ArticleListActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //hide status bar to make app full screen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_article_list);
 
+        coordinatorLayout=(CoordinatorLayout)findViewById(R.id.coordinator);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
@@ -71,9 +86,17 @@ public class ArticleListActivity extends ActionBarActivity implements
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
 
-        if (savedInstanceState == null) {
-            //refresh();
-        }
+       /* if (savedInstanceState == null) {
+            refresh();
+            Snackbar.make(coordinatorLayout,"Refreshing ...",Snackbar.LENGTH_LONG)
+                    .setAction("Stop", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }).show();
+
+        }*/
     }
 
     private void refresh() {
@@ -101,9 +124,17 @@ public class ArticleListActivity extends ActionBarActivity implements
             if (UpdaterService.BROADCAST_ACTION_STATE_CHANGE.equals(intent.getAction())) {
                 mIsRefreshing = intent.getBooleanExtra(UpdaterService.EXTRA_REFRESHING, false);
                 updateRefreshingUI();
+
             }
         }
     };
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void setEnterExitTransition(Intent intent){
+        getWindow().setExitTransition(new Explode().setDuration(800));
+        getWindow().setReenterTransition(new Explode().setDuration(800));
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(ArticleListActivity.this).toBundle());
+    }
 
     private void updateRefreshingUI() {
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
@@ -121,6 +152,8 @@ public class ArticleListActivity extends ActionBarActivity implements
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,columnCount);
+        mRecyclerView.setLayoutAnimation( AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down));
+        mRecyclerView.scheduleLayoutAnimation();
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
@@ -147,10 +180,14 @@ public class ArticleListActivity extends ActionBarActivity implements
             View view = getLayoutInflater().inflate(R.layout.list_item_article, parent, false);
             final ViewHolder vh = new ViewHolder(view);
             view.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
+
+                    setEnterExitTransition(new Intent(Intent.ACTION_VIEW,
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                   /* startActivity(new Intent(Intent.ACTION_VIEW,
+                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));*/
                 }
             });
             return vh;

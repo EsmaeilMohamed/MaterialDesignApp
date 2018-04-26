@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 
 import com.example.xyzreader.R;
@@ -50,6 +52,10 @@ public class ArticleDetailActivity extends ActionBarActivity
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
+        //
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_article_detail);
 
         getLoaderManager().initLoader(0, null, this);
@@ -67,6 +73,7 @@ public class ArticleDetailActivity extends ActionBarActivity
         if (getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
 
         /*mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
