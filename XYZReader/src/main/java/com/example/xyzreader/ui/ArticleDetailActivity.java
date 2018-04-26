@@ -35,7 +35,7 @@ public class ArticleDetailActivity extends ActionBarActivity
     private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
     //private int mTopInset;
 
-
+    private Toolbar toolbar;
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
 /*    private View mUpButtonContainer;
@@ -62,11 +62,11 @@ public class ArticleDetailActivity extends ActionBarActivity
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
 
 
-     /*   toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
+        toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }*/
+        }
 
         /*mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
