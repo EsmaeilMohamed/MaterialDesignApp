@@ -15,7 +15,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -38,8 +38,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +46,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class ArticleListActivity extends ActionBarActivity implements
+public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = ArticleListActivity.class.toString();
@@ -217,10 +216,10 @@ public class ArticleListActivity extends ActionBarActivity implements
                         + "<br/>" + " by "
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
-            Picasso.get()
+            /*Picasso.get()
                     .load(ArticleLoader.Query.THUMB_URL)
 
-                    .into(holder.thumbnailView);
+                    .into(holder.thumbnailView);*/
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
