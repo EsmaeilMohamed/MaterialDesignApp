@@ -66,14 +66,14 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
 
         //add cover flow UI view pager animation
-        mPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+        /*mPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
                 final float normalizedposition = Math.abs(Math.abs(position) - 1);
-                page.setScaleX(normalizedposition / 2 + 0.5f);
-                page.setScaleY(normalizedposition / 2 + 0.5f);
+                page.setRotationY(position * -30);
+
             }
-        });
+        });*/
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
