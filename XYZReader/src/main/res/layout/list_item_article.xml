@@ -2,17 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="@dimen/four"
+    android:layout_marginRight="@dimen/four"
+    android:layout_marginTop="@dimen/four"
+    android:layout_marginBottom="@dimen/four"
     android:background="@android:color/white"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="2dp"
-    app:cardMaxElevation="8dp">
+    app:cardCornerRadius="@dimen/fab_elevation"
+    app:cardElevation="@dimen/fab_elevation"
+    app:cardMaxElevation="@dimen/eight">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,10 +36,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/arbutus_slab"
             android:maxLines="4"
-            android:paddingBottom="4dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
+            android:paddingBottom="@dimen/four"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:paddingTop="@dimen/sixteen"
             android:textColor="@color/text_color" />
 
         <TextView
@@ -47,10 +47,10 @@
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="16dp"
-            android:textColor="#6000"
+            android:paddingLeft="@dimen/sixteen"
+            android:paddingRight="@dimen/sixteen"
+            android:paddingBottom="@dimen/sixteen"
+            android:textColor="@color/article_subtitle"
             android:maxLines="2"
             android:ellipsize="end" />
     </LinearLayout>

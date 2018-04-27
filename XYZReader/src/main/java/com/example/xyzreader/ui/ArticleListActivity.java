@@ -70,14 +70,14 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_article_list);
 
-        coordinatorLayout=(CoordinatorLayout)findViewById(R.id.coordinator);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        coordinatorLayout=findViewById(R.id.coordinator);
+        mToolbar =  findViewById(R.id.toolbar);
 
 
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout =findViewById(R.id.swipe_refresh_layout);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView =  findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
 
         if (savedInstanceState == null) {
@@ -123,6 +123,11 @@ public class ArticleListActivity extends AppCompatActivity implements
         }
     };
 
+    /*
+    * try to implement activity transition animation
+    * but it cmake app dump
+    * because loading data
+    * */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void setEnterExitTransition(Intent intent){
         getWindow().setExitTransition(new Explode().setDuration(500));
@@ -216,10 +221,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                         + "<br/>" + " by "
                         + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
-            /*Picasso.get()
-                    .load(ArticleLoader.Query.THUMB_URL)
 
-                    .into(holder.thumbnailView);*/
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());

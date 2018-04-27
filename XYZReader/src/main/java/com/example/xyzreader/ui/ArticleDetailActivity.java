@@ -35,13 +35,11 @@ public class ArticleDetailActivity extends AppCompatActivity
 
     private long mSelectedItemId;
     private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
-    //private int mTopInset;
 
     private Toolbar toolbar;
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
-/*    private View mUpButtonContainer;
-    private View mUpButton;*/
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -52,7 +50,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
-        //
+        //remove status bar to make full screen app
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -61,20 +59,20 @@ public class ArticleDetailActivity extends AppCompatActivity
         getLoaderManager().initLoader(0, null, this);
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager =  findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         mPager.setPageMargin((int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
 
 
-        toolbar=(Toolbar)findViewById(R.id.detail_toolbar);
+        toolbar=findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
+        //add cover flow UI view pager animation
         mPager.setPageTransformer(false, new ViewPager.PageTransformer() {
             @Override
             public void transformPage(View page, float position) {
