@@ -149,7 +149,7 @@ public class ArticleDetailFragment extends Fragment implements
             @Override
             public void onScrollChanged() {
                 mScrollY = mScrollView.getScrollY();
-                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
+                //getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
                 mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
                 updateStatusBar();
             }
@@ -271,6 +271,9 @@ public class ArticleDetailFragment extends Fragment implements
 
             }
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
+
+
+
             PicassoCache.getPicassoInstance(getContext())
                     .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
                     .networkPolicy(NetworkPolicy.OFFLINE)
