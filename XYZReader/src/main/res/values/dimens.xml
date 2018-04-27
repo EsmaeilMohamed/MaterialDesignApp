@@ -10,10 +10,11 @@
     <dimen name="four">4dp</dimen>
     <dimen name="eight">8dp</dimen>
     <dimen name="sixteen">16dp</dimen>
-    <dimen name="fifty_six">56dp</dimen>
     <dimen name="ten">10dp</dimen>
     <dimen name="twenty_eight">28dp</dimen>
     <dimen name="hundred_twelve">112dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+    <dimen name="sixty">60dp</dimen>
+    <dimen name="fifty_six">56dp</dimen>
 
 </resources>

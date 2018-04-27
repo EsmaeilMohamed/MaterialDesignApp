@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         style="@style/AppTheme.AppBarOverlay"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/fifty_six"
         android:elevation="@dimen/four"
         android:fitsSystemWindows="true">
 
@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:scrollbarStyle="outsideOverlay"
-            android:paddingTop="60dp"
+            android:paddingTop="@dimen/sixty"
             android:layoutAnimation="@anim/layout_animation_fall_down"
             android:paddingLeft="@dimen/list_side_margin"
             android:paddingRight="@dimen/list_side_margin"
