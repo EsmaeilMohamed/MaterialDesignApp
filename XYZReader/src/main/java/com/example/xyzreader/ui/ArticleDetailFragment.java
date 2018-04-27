@@ -174,6 +174,7 @@ public class ArticleDetailFragment extends Fragment implements
         hideFabWhileScrolling();
         bindViews();
         updateStatusBar();
+
         return mRootView;
     }
 
