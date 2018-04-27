@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -35,8 +36,13 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.example.xyzreader.PicassoCache;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -224,6 +230,7 @@ public class ArticleDetailFragment extends Fragment implements
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void bindViews() {
         if (mRootView == null) {
             return;
@@ -234,8 +241,6 @@ public class ArticleDetailFragment extends Fragment implements
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView =  mRootView.findViewById(R.id.article_body);
 
-
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -262,7 +267,36 @@ public class ArticleDetailFragment extends Fragment implements
 
             }
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
+            PicassoCache.getPicassoInstance(getContext())
+                    .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+
+                    .into(new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            if (bitmap != null) {
+                                Palette p = Palette.from(bitmap).generate();
+                                mMutedColor = p.getDarkMutedColor(0xFF333333);
+                                mPhotoView.setImageBitmap(bitmap);
+                                mRootView.findViewById(R.id.meta_bar)
+                                        .setBackgroundColor(mMutedColor);
+
+                                updateStatusBar();
+                            }
+                        }
+
+                        @Override
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                        }
+                    });
+
+            /*ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
@@ -281,7 +315,7 @@ public class ArticleDetailFragment extends Fragment implements
                         public void onErrorResponse(VolleyError volleyError) {
 
                         }
-                    });
+                    });*/
         } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
@@ -295,6 +329,7 @@ public class ArticleDetailFragment extends Fragment implements
         return ArticleLoader.newInstanceForItemId(getActivity(), mItemId);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         if (!isAdded()) {
@@ -314,6 +349,7 @@ public class ArticleDetailFragment extends Fragment implements
         bindViews();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
